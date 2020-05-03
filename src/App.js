@@ -50,7 +50,9 @@ class app extends Component {
     ],
     //in the react hooks for this state if we click on switch Handler it will only update the person properties for that we need to
     //update in the switchHandler that otherState :personsState.otherState in line 40
-    otherState: 'New State'
+    otherState: 'New State',
+    showPersons: false
+
   }
   // switchHandler = () => {
   //   // alert('Was clicked!!')
@@ -89,34 +91,42 @@ class app extends Component {
 
     })
   }
+  toggleHandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState({ showPersons: !doesShow });
+  }
 
   render() {
     return (
-      <div className="App">
-        <h1>Subhajit</h1>
-        <p>This is really cool stuff</p>
-        {/* This is for hooks we dont have to include this as dumb component */}
-        {/* <button onClick={switchHandler}>Switch</button> */}
-        {/* <Post tilte="My title" /> */}
-        {/* refering to the click prop */}
-        {/* This is using hooks */}
-        {/* <Person name={personsState.persons[0].name} age={personsState.persons[0].age} >A new day has come</Person>
-      <Person name={personsState.persons[1].name} age={personsState.persons[1].age} /> */}
-        {/* 1st approach of getting the data */}
-        {/* <button onClick={this.switchHandler.bind(this, 'Tyson')}>Switch</button>  */}
-        Here this refers to the switch handled and arrow function is passing the object
-        <button onClick={() => this.switchHandler('Max')}>Switch</button>
-        <Person name="Mew2" age="100000000000" />
-        <Person
-          // this is we are passing down the obj
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age}
-          // we are using click property and by this keyword we are fetching the new data from switchHandler
-          click={this.switchHandler.bind(this, 'Kai')}
-          changed={this.nameHandler}>A new day has come
-          </Person>
-        <Person name={this.state.persons[1].name} age={this.state.persons[1].age} />
-
+      <div className="App"><h1>Subhajit</h1>
+      <p>This is really cool stuff</p>
+      {/* This is for hooks we dont have to include this as dumb component */}
+      {/* <button onClick={switchHandler}>Switch</button> */}
+      {/* <Post tilte="My title" /> */}
+      {/* refering to the click prop */}
+      {/* This is using hooks */}
+      {/* <Person name={personsState.persons[0].name} age={personsState.persons[0].age} >A new day has come</Person>
+    <Person name={personsState.persons[1].name} age={personsState.persons[1].age} /> */}
+      {/* 1st approach of getting the data */}
+      {/* <button onClick={this.switchHandler.bind(this, 'Tyson')}>Switch</button>  */}
+      {/* Here this refers to the switch handled and arrow function is passing the object */}
+        {/* <button  onClick={() => this.switchHandler('Max')}>Switch</button> */}
+        <button  onClick={this.toggleHandler}>Switch</button>
+      <Person name="Mew2" age="100000000000" />
+      <Person name={this.state.persons[1].name} age={this.state.persons[1].age} />
+        {/* Rendering Content Conditional */}
+        {this.state.showPersons === true ?
+            < div >
+              <Person
+                // this is we are passing down the obj
+                name={this.state.persons[0].name}
+                age={this.state.persons[0].age}
+                // we are using click property and by this keyword we are fetching the new data from switchHandler
+                click={this.switchHandler.bind(this, 'Kai')}
+                changed={this.nameHandler}>A new day has come
+              </Person>
+            </div> : null
+          }
       </div>
     );
     // return React.createElement('div', {className: 'App'},React.createElement('h1', null, 'My Name Is Subhajit'))
