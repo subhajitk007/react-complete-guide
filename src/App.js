@@ -91,12 +91,40 @@ class app extends Component {
 
     })
   }
+  deletePersonHandler = (personIndex) => {
+    const persons = this.state.persons;
+    persons.splice(personIndex, 1);
+    this.setState({persons: persons})
+
+  }
   toggleHandler = () => {
     const doesShow = this.state.showPersons;
     this.setState({ showPersons: !doesShow });
   }
 
   render() {
+    //Here we are doing the same thing toggling the div part with normal javascript and rendering it inside jsx with {} dynamically
+    let togglePerson = null;
+    if (this.state.showPersons) {
+      togglePerson = (
+        < div >
+          {this.state.persons.map((person, index) => {
+            return <Person
+              click={() => this.deletePersonHandler(index)}
+              name={person.name}
+              age={person.age} />
+          })}
+
+          {/* After mapping this part is no longer required
+          <Person
+            name={this.state.persons[0].name}
+            age={this.state.persons[0].age}
+            click={this.switchHandler.bind(this, 'Kai')}
+            changed={this.nameHandler} >A new day has come
+          </Person> */}
+        </div>
+      );
+    }
     return (
       <div className="App"><h1>Subhajit</h1>
       <p>This is really cool stuff</p>
@@ -112,21 +140,25 @@ class app extends Component {
       {/* Here this refers to the switch handled and arrow function is passing the object */}
         {/* <button  onClick={() => this.switchHandler('Max')}>Switch</button> */}
         <button  onClick={this.toggleHandler}>Switch</button>
-      <Person name="Mew2" age="100000000000" />
-      <Person name={this.state.persons[1].name} age={this.state.persons[1].age} />
-        {/* Rendering Content Conditional */}
-        {this.state.showPersons === true ?
-            < div >
-              <Person
-                // this is we are passing down the obj
+      {/* <Person name="Mew2" age="100000000000" /> */}
+      {/* <Person name={this.state.persons[1].name} age={this.state.persons[1].age} /> */}
+        {/* Rendering Content Conditional we can do this by outsourcing method aswell with normal javascript
+            there we don't require this kind of implementation*/}
+        {/* {this.state.showPersons === true ? */}
+            {/* < div >
+              <Person */}
+                {/* // this is we are passing down the obj
                 name={this.state.persons[0].name}
                 age={this.state.persons[0].age}
                 // we are using click property and by this keyword we are fetching the new data from switchHandler
                 click={this.switchHandler.bind(this, 'Kai')}
                 changed={this.nameHandler}>A new day has come
               </Person>
-            </div> : null
-          }
+        </div> */}
+            {/* : null
+          } */}
+        {/* We are passing the normal javascript togglePerson here */}
+        {togglePerson}
       </div>
     );
     // return React.createElement('div', {className: 'App'},React.createElement('h1', null, 'My Name Is Subhajit'))
