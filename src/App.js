@@ -45,8 +45,9 @@ import Person from './Person/Person';
 class app extends Component {
   state = {
     persons: [
-      { name: 'Subhajit', age: 26 },
-      { name: 'Santu', age: 25 }
+      {id:'www', name: 'Subhajit', age: 26 },
+      {id:'xxx', name: 'Santu', age: 25 },
+      {id:'zzz', name: 'Baba', age:20 }
     ],
     //in the react hooks for this state if we click on switch Handler it will only update the person properties for that we need to
     //update in the switchHandler that otherState :personsState.otherState in line 40
@@ -78,21 +79,33 @@ class app extends Component {
     })
   }
   // this is for two way binding
-  nameHandler = (event) => {
-    // alert('Was clicked!!')
+  nameHandler = (event, id) => {
+    const personIndex = this.state.findIndex(p => {
+      return p.id = id;
+    });
+    const person = { ...this.state.persons[personIndex] };
+    //const person = Object.assign({}, this.state.persons[personIndex]);
+    person.name = event.target.value;
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
     this.setState({
-      persons: [
-        // here event refers to extract the obj target is inputbox and value is what ever we are typing
-        //this shows us how we dynamically update something passing down event references and how we manage inputs
-        { name: event.target.value, age: 100 },
-        { name: 'LMAO', age: 10 }
-      ]
+      persons: persons })
+      //for flexible state change with map function we dont require to hard code persons in the new state
+      // persons: [
+      //   // here event refers to extract the obj target is inputbox and value is what ever we are typing
+      //   //this shows us how we dynamically update something passing down event references and how we manage inputs
+      //   { name: event.target.value, age: 100 },
+      //   { name: 'LMAO', age: 10 }
+      // ]
 
 
-    })
+
   }
   deletePersonHandler = (personIndex) => {
-    const persons = this.state.persons;
+    //const persons = this.state.persons.slice();//this can seperate the current state array into new one
+    //we need to change the state immutably like we need to assign a new array and put the old array data in the new one we can
+    //do it by slice and Spread operator.
+    const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
     this.setState({persons: persons})
 
@@ -112,7 +125,10 @@ class app extends Component {
             return <Person
               click={() => this.deletePersonHandler(index)}
               name={person.name}
-              age={person.age} />
+              age={person.age}
+              //adding key to the map so that react will understand that element is old or new
+              key={person.id}
+              changed={(event) => this.nameHandler(event, person.id)}/>
           })}
 
           {/* After mapping this part is no longer required
