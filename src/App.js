@@ -155,7 +155,6 @@ class app extends Component {
       {/* <button onClick={this.switchHandler.bind(this, 'Tyson')}>Switch</button>  */}
       {/* Here this refers to the switch handled and arrow function is passing the object */}
         {/* <button  onClick={() => this.switchHandler('Max')}>Switch</button> */}
-        <button  onClick={this.toggleHandler}>Switch</button>
       {/* <Person name="Mew2" age="100000000000" /> */}
       {/* <Person name={this.state.persons[1].name} age={this.state.persons[1].age} /> */}
         {/* Rendering Content Conditional we can do this by outsourcing method aswell with normal javascript
@@ -174,6 +173,7 @@ class app extends Component {
             {/* : null
           } */}
         {/* We are passing the normal javascript togglePerson here */}
+        <button  onClick={this.toggleHandler}>Switch</button>
         {togglePerson}
       </div>
     );
